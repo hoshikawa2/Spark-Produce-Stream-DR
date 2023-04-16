@@ -12,7 +12,7 @@ import base64
 PARTITIONS = 1
 
 STREAM_NAME = "Stream_R1"
-stream_OCID = "ocid1.stream.oc1.iad.amaaaaaaihuwreyat6d6dtnvm5nrnci56fusp2y543yzdhccrrwtxfxt2gjq"
+stream_OCID = "ocid1.stream.oc1.iad.amxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx2gjq"
 
 message_Endpoint = "https://pwxxxxxxxxxxxxxxxxxxxv2q.apigateway.us-ashburn-1.oci.customer-oci.com"
 
