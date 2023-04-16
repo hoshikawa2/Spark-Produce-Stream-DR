@@ -15,10 +15,10 @@ Replicating from Principal Region to DR Region takes time, so latency is critica
 
 Adopting the strategy to produce to Principal Region and DR Region in an active-active architecture demands an increase of cost but it can be reduced. Let's see what cost is increased and what can be done to reduce:
 
-|Component| Strategy                                                                                                                                                                                                                                                          |Status|
-|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------|
-|Streaming| Produce and Consume in both regions                                                                                                                                                                                                                               |Cost x2|
-|Data Flow| Consume in original region. If it fails, activate Data Flow automatically in DR region. A token says if Data Flow process or not the data. The DR Data Flow assumes if token changed to DR. If Principal turns on again, the DR Data Flow needs to be turned off. |Cost can be reduced
+| Component | Strategy                                                                                                                                                                                                                                                                                |Status|
+|-------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------|
+| Streaming | Produce and Consume in both regions                                                                                                                                                                                                                                                     |Cost x2|
+| Spark | Data is consumed and processed in original region. If it fails, activation the processing automatically in DR region. A token says wich region process or not the data. The DR region assumes if token changed to DR. If Principal turns on again, the DR Spark needs to be turned off. |Cost can be reduced
 
 ### Analyzing the Code 
 
