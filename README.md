@@ -10,9 +10,18 @@ This material will guide you through the necessary steps to replicate this solut
 
 ### Disaster Recovery for Streaming is a hard engineering work
 
+There are some approaches to resolve a Streaming Failure and there are a lot of concerns about how to implement a reliable and resilient solution. Some important components needs to be considered:
 
-- Sequenced Events
-- Multi-Region Clustered Streaming Services 
+- Replicate Streaming Data from Principal Region to DR Region
+- Effort of Development
+- Care of Sequenced Events
+- Latency
+- Cost
+- Idempotency
+- Conectivity
+- Time to consume in DR Region after a disaster
+- Governance
+- Resilience
 
 ### Why not to Replicate?
 
