@@ -43,7 +43,7 @@ Adopting the strategy to produce to Principal Region and DR Region in an active-
 
 ### Analyzing the Code 
 
-The main code is **check.py**. It checks all the time if the Principal Region Streaming in on-line. If it is on-line, then a file named **r1** (as configured in the code) will be written on the Object Storage otherwise, a file named **r2** will be written on the same bucket. This is necessary because each code for processing (one in the Principal Region and another region are basically the same code) has a condition searching for what file is saved on object storage. 
+The main code is **check.py**. It checks all the time if the Principal Region Streaming in on-line. If it is on-line, then a file named **r1** (as configured in the code) will be written on the Object Storage otherwise, a file named **r2** will be written on the same bucket. This is necessary because each code for processing (one in the Principal Region and another region are basically the same code) has a condition searching for what file is saved on object storage. With this approach, cost can be saved cutting further processing to the end.
 
 ---
 **check.py**
