@@ -1,3 +1,7 @@
+### Introduction
+
+
+
 ### Disaster Recovery for Streaming is a hard engineering work
 
 
@@ -44,3 +48,72 @@ Adopting the strategy to produce to Principal Region and DR Region in an active-
 
 Change from one region to another does not guarantee **idempotency**. The DR Region assumes data imediatelly after the Principal Region fails but it could generate duplicate messages.
 We can't know where the original data stopped so some of it could be processed.
+
+### Preparing for Execution
+
+1. Setup the variables for the:
+
+- **check.py**: This code needs to run in DR Region. It checks everytime if Principal Region (r1) in on-line. If r1 is OK, it saves a file named **r1** on the object storage; otherwise saves **r2** and deletes **r1** file and vice-versa.
+
+|VARIABLE NAME| VALUE                                               |EXAMPLE|
+|--------------|-----------------------------------------------------|------|
+|STREAM_NAME| The name of the Principal Region OCI Streaming      |Stream_R1|
+|stream_OCID| The OCID of the Principal Region OCI Streaming      |ocid1.stream.oc1.iad.amxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx2gjq|
+|stream_pool_id| The OCID of the Principal Region OCI Streaming Pool |ocid1.streampool.oc1.iad.amaxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxodlq|
+|namespace| The DR tenant namespace                             |"ixxxxxxxxxbx"|
+|bucket_name| The DR Bucket Name to receive the token             | data|
+|object_name| The token name for Principal Region                 | r1|
+|object_reverse| The token name from DR Region                       | r2|
+
+- **produce_partitions**: This code just produce data for the Principal and DR region at same time. So the solution is not produce to the Principal Region and have a process separated for replicate from Principal to DR Region. This solution produces the data for both region.
+
+| VARIABLE NAME  | VALUE                                                       | EXAMPLE   |
+|----------------|-------------------------------------------------------------|-----------|
+| STREAM_NAME_R1 | The Principal Region OCI Streaming Name                     | Stream_API |
+| STREAM_NAME_R2 | The DR Region OCI Streaming Name                            | Stream_R1 |
+| compartment_r1 | The Compartment Name for the Principal Region OCI Streaming |ocid1.compartment.oc1..aaaxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxnzq"|
+| compartment_r2 | The Compartment Name for the DR Region OCI Streaming        |ocid1.compartment.oc1..aaaxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxnzq"|
+
+>**Note**: This demo was written to illustrate a DR Streaming but it executes in the same tenant, so the **produce_partitions.py** works with 2 streaming services on the unique tenant. If you want to execute this demo in 2 different tenants, you need to change the code to authenticate your OCI CLI mechanism for each produce methods.
+
+- **consume_r1.py**: This code represents a process and could be added to a **Spark** process. This process needs to be executed continuously as part of a real-time processing. As said in previously section, there is a condition to stop processing, this is important to not duplicate processing at Principal and DR region.
+
+| VARIABLE NAME  | VALUE                                                                                                | EXAMPLE                                                                       |
+|----------------|------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
+|STREAM_NAME | The Principal OCI Streaming name                                                                     | Stream_R1                                                                     |
+|stream_OCID | The Principal OCI Streaming OCID                                                                     | ocid1.stream.oc1.iad.amxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx2gjq |
+|message_Endpoint| This is the Principal OCI Streaming endpoint                                                         | https://pwxxxxxxxxxxxxxxxxxxxv2q.apigateway.us-ashburn-1.oci.customer-oci.com |
+|is_DR| This flag represents the Principal and the DR environment. This Code always represents the Principal | False                                                                         |
+|namespace| The Principal OCI Namespace                                                                          | ixxxxxxxxxbx                                                                  |
+|bucket_name| The DR Bucket Name to receive the token                                                              | data                                                                          |
+|object_name| The token name for Principal Region                                                                  | r1                                                                            |
+|object_reverse| The token name from DR Region                                                                        | r2                                                                            |
+
+- **consume_r2.py**: This code represents a process and could be added to a **Spark** process. This process needs to be executed continuously as part of a real-time processing. As said in previously section, there is a condition to stop processing, this is important to not duplicate processing at Principal and DR region. The consumer code for the Principal and DR Regions are pratically the same, the difference is the variables. **is_DR** represents what is the Principal and what is the DR Region.
+
+| VARIABLE NAME  | VALUE                                                                                                | EXAMPLE                                                                       |
+|----------------|------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
+|STREAM_NAME | The Principal OCI Streaming name                                                                     | Stream_API                                                                    |
+|stream_OCID | The Principal OCI Streaming OCID                                                                     | ocid1.stream.oc1.iad.amxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx2gjq |
+|message_Endpoint| This is the Principal OCI Streaming endpoint                                                         | https://pwxxxxxxxxxxxxxxxxxxxv2q.apigateway.us-ashburn-1.oci.customer-oci.com |
+|is_DR| This flag represents the Principal and the DR environment. This Code always represents the Principal | True                                                                          |
+|namespace| The Principal OCI Namespace                                                                          | ixxxxxxxxxbx                                                                  |
+|bucket_name| The DR Bucket Name to receive the token                                                              | data                                                                          |
+|object_name| The token name for Principal Region                                                                  | r1                                                                            |
+|object_reverse| The token name from DR Region                                                                        | r2                                                                            |
+
+2. Running the Codes
+
+Start the code in this sequence:
+
+- check.py
+- produce_partitions.py
+- consume_r1.py
+- consume_r2.py
+
+### Test the Fail
+
+OCI Streaming cannot be stopped manually, so the test needs to be done with another strategy.
+You can stop the **check.py** code and change the Principal OCI Streaming variables to simulate an unvailable streaming environment.
+Run again the **check.py** and you can see that consume_r1.py stopped to consume and show messages in screen and imediatelly consume_r2.py messages are showed.
+
