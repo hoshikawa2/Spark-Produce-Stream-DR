@@ -66,7 +66,7 @@ The main code is **check.py**. It checks all the time if the Principal Region St
 - The **change_token** saves a file in an **Object Storage** bucket
 - A token named **r1** assigns the principal region
 - A token named r2 assigns the DR region
-
+- There is a REST Service inside the OCI SDK to obtain the data of the OCI Streaming Service
 
 ![Check Region](./images/CheckRegion_SaveToken.png)
 
