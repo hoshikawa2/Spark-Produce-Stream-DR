@@ -41,12 +41,13 @@ Adopting the strategy to produce to Principal Region and DR Region in an active-
 
 ![Check Region](./images/CheckRegion_SaveToken.png)
 
+---
+**consume_r1.py and consume_r2.py**
+
 - This code represents a typical streaming consumer through an API Gateway REST services with the OCI SDK code 
 - It needs to be implemented in your Spark Streaming Consumer
 - In your DR Streaming deployment, setup **is_DR** attribute with **True**
 - In your Principal Streaming Region, setup **is_DR** with **False**
----
-**consume_parameters.py**
 
 - ![Consume Parameters](./images/consume_parameters.png)
 
