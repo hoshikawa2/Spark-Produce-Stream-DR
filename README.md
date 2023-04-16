@@ -1,3 +1,26 @@
+### Disaster Recovery for Streaming is a hard engineering work
+
+
+- Sequenced Events
+- Multi-Region Clustered Streaming Services 
+
+### Why not to Replicate?
+
+Comparing with a replication process, if the Principal Region fails, the replication stops imediatelly. So the process does not continue.
+The solution for this is maintain an active-active strategy, from producing, processing and consuming.
+
+Replicating from Principal Region to DR Region takes time, so latency is critical.
+
+### Cost
+
+Adopting the strategy to produce to Principal Region and DR Region in an active-active architecture demands an increase of cost but it can be reduced. Let's see what cost is increased and what can be done to reduce:
+
+|Component| Strategy                                                                                                                                                                                                                                                          |Status|
+|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------|
+|Streaming| Produce and Consume in both regions                                                                                                                                                                                                                               |Cost x2|
+|Data Flow| Consume in original region. If it fails, activate Data Flow automatically in DR region. A token says if Data Flow process or not the data. The DR Data Flow assumes if token changed to DR. If Principal turns on again, the DR Data Flow needs to be turned off. |Cost can be reduced
+
+### Analyzing the Code 
 
 - This code needs to run continously to check if the Principal Region is running
 - The **change_token** saves a file in an **Object Storage** bucket
