@@ -1,6 +1,12 @@
 ### Introduction
 
+This is a streaming data-based Disaster Recovery demo solution. In this demo, I show how streaming data can be used to build resilient and reliable disaster recovery solutions.
 
+This solution uses Oracle Cloud Streaming in two different regions to produce data simultaneously. This data is processed with Spark (or any other code for processing data) only in the main region, ensuring processing efficiency. However, in the event of a failure in the primary region, this solution is capable of transferring control to the disaster region via a token stored in a file on Oracle Cloud Object Storage.
+
+This solution is an example of how data streaming can be integrated with other cloud technologies to provide complete Disaster Recovery solutions. Through real-time data replication and rapid disaster recovery, data streaming is a valuable technique for disaster recovery.
+
+This material will guide you through the necessary steps to replicate this solution in your own infrastructure. I hope you find this guide useful and that you can use the concepts presented here in your own disaster recovery solutions.
 
 ### Disaster Recovery for Streaming is a hard engineering work
 
@@ -30,6 +36,8 @@ Adopting the strategy to produce to Principal Region and DR Region in an active-
 - The **change_token** saves a file in an **Object Storage** bucket
 - A token named **r1** assigns the principal region
 - A token named r2 assigns the DR region
+---
+**check.py**
 
 ![Check Region](./images/CheckRegion_SaveToken.png)
 
@@ -37,7 +45,10 @@ Adopting the strategy to produce to Principal Region and DR Region in an active-
 - It needs to be implemented in your Spark Streaming Consumer
 - In your DR Streaming deployment, setup **is_DR** attribute with **True**
 - In your Principal Streaming Region, setup **is_DR** with **False**
-![Consume Parameters](./images/consume_parameters.png)
+---
+**consume_parameters.py**
+
+- ![Consume Parameters](./images/consume_parameters.png)
 
 - The DR is an Active-Active system
 - Both the Principal Region (r1) and DR Region (r2) is working and consuming the streaming
@@ -135,3 +146,4 @@ Run again the **check.py** and you can see that consume_r1.py stopped to consume
 ![started_consume_r2.py](./images/started_consume_r2.py.png)
 
 It works!!!!
+    
