@@ -36,6 +36,16 @@ The solution for this is maintain an active-active strategy, from producing, pro
 
 Replicating from Principal Region to DR Region takes time, so latency is critical.
 
+### Main Strategy in this Architecture
+
+These are the main strategies:
+
+- Maintain a VM process to check everytime the Principal Streaming
+- Produce the messages to both regions at same time
+- Save a token to inform the status of Principal Streaming health
+- Maintain the Spark on both regions (or another processing data code) working
+- Each Spark code needs to check if it has the token to evict duplication or unecessary data processing
+
 ### Cost
 
 Adopting the strategy to produce to Principal Region and DR Region in an active-active architecture demands an increase of cost but it can be reduced. Let's see what cost is increased and what can be done to reduce:
