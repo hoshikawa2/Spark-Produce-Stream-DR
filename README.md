@@ -117,3 +117,21 @@ OCI Streaming cannot be stopped manually, so the test needs to be done with anot
 You can stop the **check.py** code and change the Principal OCI Streaming variables to simulate an unvailable streaming environment.
 Run again the **check.py** and you can see that consume_r1.py stopped to consume and show messages in screen and imediatelly consume_r2.py messages are showed.
 
+- **check.py**: When this code stared, it will check the health of Principal Region. In this demo, the parameters was changed for a DELETED Streaming Service and executed again.
+
+![check.py](./images/run_check.py.png)
+![simulate_change_streaming_check.py](./images/simulate_change_streaming_check.py)
+
+- **produce_partitions.py**
+
+![produce_partitions.py](./images/produce_partitions.py.png)
+
+- **consume_r1.py**: The Principal Region started consuming data and stopped automatically when token changed to the DR Region.
+
+![stopped_consume_r1.py](./images/stopped_consume_r1.py.png)
+
+- **consume_r2.py**: The DR Region started consuming, but because of condition in the code and the token status (started at r1). The process started to consume only when the check.py changed the r2 token.  
+
+![started_consume_r2.py](./images/started_consume_r2.py.png)
+
+It works!!!!
