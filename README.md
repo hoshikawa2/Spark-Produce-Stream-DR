@@ -43,12 +43,16 @@ Adopting the strategy to produce to Principal Region and DR Region in an active-
 
 ### Analyzing the Code 
 
+The main code is **check.py**. It checks all the time if the Principal Region Streaming in on-line. If it is on-line, then a file named **r1** (as configured in the code) will be written on the Object Storage otherwise, a file named **r2** will be written on the same bucket. This is necessary because each code for processing (one in the Principal Region and another region are basically the same code) has a condition searching for what file is saved on object storage. 
+
+---
+**check.py**
+
 - This code needs to run continously to check if the Principal Region is running
 - The **change_token** saves a file in an **Object Storage** bucket
 - A token named **r1** assigns the principal region
 - A token named r2 assigns the DR region
----
-**check.py**
+
 
 ![Check Region](./images/CheckRegion_SaveToken.png)
 
@@ -60,7 +64,7 @@ Adopting the strategy to produce to Principal Region and DR Region in an active-
 - In your DR Streaming deployment, setup **is_DR** attribute with **True**
 - In your Principal Streaming Region, setup **is_DR** with **False**
 
-- ![Consume Parameters](./images/consume_parameters.png)
+![Consume Parameters](./images/consume_parameters.png)
 
 - The DR is an Active-Active system
 - Both the Principal Region (r1) and DR Region (r2) is working and consuming the streaming
