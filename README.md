@@ -6,6 +6,8 @@ This is a streaming data-based Disaster Recovery demo solution. In this demo, I 
 
 This solution uses Oracle Cloud Streaming in two different regions to produce data simultaneously. This data is processed with Spark (or any other code for processing data) only in the main region, ensuring processing efficiency. However, in the event of a failure in the primary region, this solution is capable of transferring control to the disaster region via a token stored in a file on Oracle Cloud Object Storage.
 
+![Architect Design](./images/Architect Design.png)
+
 This solution is an example of how data streaming can be integrated with other cloud technologies to provide complete Disaster Recovery solutions. Through real-time data replication and rapid disaster recovery, data streaming is a valuable technique for disaster recovery.
 
 This material will guide you through the necessary steps to replicate this solution in your own infrastructure. I hope you find this guide useful and that you can use the concepts presented here in your own disaster recovery solutions.
