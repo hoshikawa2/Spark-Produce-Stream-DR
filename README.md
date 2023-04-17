@@ -14,6 +14,10 @@ This solution is an example of how data streaming can be integrated with other c
 
 This material will guide you through the necessary steps to replicate this solution in your own infrastructure. I hope you find this guide useful and that you can use the concepts presented here in your own disaster recovery solutions.
 
+### Prerequisites
+
+- **OCI CLI** (Oracle Cloud Command Line Interface) installed on your local machine: This is the link to install the [OCI CLI](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliinstall.htm).
+
 ### Disaster Recovery for Streaming is a hard engineering work
 
 There are some approaches to resolve a Streaming Failure and there are a lot of concerns about how to implement a reliable and resilient solution. Some important components needs to be considered:
