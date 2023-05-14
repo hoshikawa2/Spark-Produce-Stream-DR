@@ -62,7 +62,6 @@ def simple_message_loop(config, namespace, bucket_name, object_name, object_reve
 def get_timestamp():
     today = datetime.now()
     iso_date = today.strftime("%Y-%m-%dT%H:%M:%SZ")
-    print("Timestamp=", iso_date)
     return iso_date
 
 
