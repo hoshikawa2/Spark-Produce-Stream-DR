@@ -88,6 +88,7 @@ The main code is **check.py**. It checks all the time if the Principal Region St
 - Both the Principal Region (r1) and DR Region (r2) is working and consuming the streaming
 - But the method **check_token()** blocks the processing in the DR region
 - If Principal Region fails, the token changes from **r1** to **r2** because of the **check** Region code
+- The offset is controlled by **timestamp**, so there is a variable named **stream_timestamp** used as UTC Datetime to put in the Group Cursor control as a parameter. It can help you to work with **RPO=0**
 
 ![Consume Code](./images/Consume_Code.png)
 

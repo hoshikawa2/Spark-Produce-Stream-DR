@@ -24,8 +24,7 @@ from base64 import b64encode, b64decode
 STREAM_NAME_R1 = "Stream_API"
 STREAM_NAME_R2 = "Stream_R1"
 PARTITIONS = 1
-compartment_r1 = "ocid1.compartment.oc1..aaaxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxnzq"
-compartment_r2 = "ocid1.compartment.oc1..aaaxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxnzq"
+compartment = "ocid1.compartment.oc1..aa.............................................nzq"
 
 def publish_example_messages(client_r1, stream_id_r1, client_r2, stream_id_r2):
     # Build up a PutMessagesDetails and publish some messages to the stream
@@ -59,7 +58,7 @@ def get_or_create_stream(client, compartment_id, stream_name, partition, sac_com
 
     # Create stream_details object that need to be passed while creating stream.
     stream_details = oci.streaming.models.CreateStreamDetails(name=stream_name, partitions=partition,
-                                                              compartment_id=compartment_id, retention_in_hours=24)
+                                                              compartment_id=compartment, retention_in_hours=24)
 
     # Since stream creation is asynchronous; we need to wait for the stream to become active.
     response = sac_composite.create_stream_and_wait_for_state(
@@ -79,13 +78,13 @@ stream_admin_client = oci.streaming.StreamAdminClient(config)
 stream_admin_client_composite = oci.streaming.StreamAdminClientCompositeOperations(stream_admin_client)
 
 # Region 1
-stream_r1 = get_or_create_stream(stream_admin_client, compartment_r1, STREAM_NAME_R1,
-                              PARTITIONS, stream_admin_client_composite).data
+stream_r1 = get_or_create_stream(stream_admin_client, compartment, STREAM_NAME_R1,
+                                 PARTITIONS, stream_admin_client_composite).data
 stream_client_r1 = oci.streaming.StreamClient(config, service_endpoint=stream_r1.messages_endpoint)
 s_id_r1 = stream_r1.id
 
 # Region 2
-stream_r2 = get_or_create_stream(stream_admin_client, compartment_r2, STREAM_NAME_R2,
+stream_r2 = get_or_create_stream(stream_admin_client, compartment, STREAM_NAME_R2,
                                  PARTITIONS, stream_admin_client_composite).data
 stream_client_r2 = oci.streaming.StreamClient(config, service_endpoint=stream_r2.messages_endpoint)
 s_id_r2 = stream_r2.id

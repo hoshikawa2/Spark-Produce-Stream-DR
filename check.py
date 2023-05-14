@@ -9,17 +9,17 @@ import base64
 
 PARTITIONS = 1
 # DELETED
-STREAM_NAME = "Stream_R1"
-stream_OCID = "ocid1.stream.oc1.iad.amxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx2gjq"
-stream_pool_id = "ocid1.streampool.oc1.iad.amaxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxodlq"
-
-# ACTIVE
 #STREAM_NAME = "Stream_R1"
 #stream_OCID = "ocid1.stream.oc1.iad.amaaaaaaihuwreyat6d6dtnvm5nrnci56fusp2y543yzdhccrrwtxfxt2gjq"
-#stream_pool_id = "ocid1.streampool.oc1.iad.amaaaaaaihuwreyaybybmrayawqkpa3z3o44cre752zp6u4zmkhoo34sybaq"
+#stream_pool_id = "ocid1.streampool.oc1.iad.amaaaaaaihuwreya563ewjceqflyrhwfhwgs6piz7254mi7e4ebg5h57odlq"
+
+# ACTIVE
+STREAM_NAME = "Stream_R1"
+stream_OCID = "ocid1.stream.oc1.iad.ama.............................................2gjq"
+stream_pool_id = "ocid1.streampool.oc1.iad.am.............................................ybaq"
 
 
-namespace = "ixxxxxxxxxbx"
+namespace = "id............bx"
 bucket_name = "data"
 object_name = "r1"
 object_reverse = "r2"
