@@ -60,10 +60,9 @@ def simple_message_loop(config, namespace, bucket_name, object_name, object_reve
             flag_cursor = False
 
 def get_timestamp():
-    today = datetime.now()
+    today = datetime.now() - timedelta(hours=0, minutes=5)
     iso_date = today.strftime("%Y-%m-%dT%H:%M:%SZ")
     return iso_date
-
 
 def check_token(config, namespace, bucket_name, object_name, object_reverse, is_DR):
     object_storage_client = oci.object_storage.ObjectStorageClient(config)

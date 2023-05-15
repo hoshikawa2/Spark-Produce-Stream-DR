@@ -92,7 +92,11 @@ The main code is **check.py**. It checks all the time if the Principal Region St
 
 ![Consume Code](./images/Consume_Code.png)
 
-Change from one region to another does not guarantee **idempotency**. The DR Region assumes data imediatelly after the Principal Region fails but it could generate duplicate messages.
+- There is a 5 minutes for guarantee **RPO=0** in the method **get_timestamp()**. The Group Cursor will return capture from this **timestamp** when the DR change to the other region.
+
+![timestamp](./images/timestamp_contingency.png)
+
+Change from one region to another does not guarantee **idempotency**. The DR Region assumes data imediatelly after the Principal Region fails and it will generate duplicate messages.
 We can't know where the original data stopped so some of it could be processed.
 
 ### Preparing for Execution
